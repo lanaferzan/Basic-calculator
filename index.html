@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" readonly>
+        <div class="button">
+            <button id="clear">AC</button>
+            <button id="clear">Del</button>
+            <button id="operators">%</button>
+            <button id="operators">÷</button>
+            <!-- ////// --> 
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button id="operators">x</button>
+            <!-- ////// --> 
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button id="operators">-</button>
+             <!-- ////// -->
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button id="operators">+</button>
+              <!-- ////// -->
+            <button>0</button>
+            <button id="operators">.</button>
+            <button id="operators">+/-</button>
+            <button id="answer">=</button>
+    </div>
+  <script>
+  const display = document.getElementById("display");
+  const buttons = document.querySelectorAll(".button button");
+
+  let currentInput = "";
+
+  buttons.forEach(button => {
+    const value = button.textContent;
+
+    button.addEventListener("click", () => {
+      if (value === "=") {
+        try {
+          currentInput = currentInput
+            .replace(/x/g, "*")
+            .replace(/÷/g, "/")
+            .replace(/%/g, "%");
+          display.value = eval(currentInput);
+          currentInput = display.value;
+        } catch (err) {
+          display.value = "Error";
+          currentInput = "";
+        }
+      } else if (value === "AC") {
+        currentInput = "";
+        display.value = "";
+      } else if (value === "Del") {
+        currentInput = currentInput.slice(0, -1);
+        display.value = currentInput;
+      } else if (value === "+/-") {
+        if (currentInput) {
+          if (currentInput.startsWith("-")) {
+            currentInput = currentInput.slice(1);
+          } else {
+            currentInput = "-" + currentInput;
+          }
+          display.value = currentInput;
+        }
+      } else {
+        currentInput += value;
+        display.value = currentInput;
+      }
+    });
+  });
+</script>
+</body>
+</html>
